@@ -3,7 +3,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-@app.route('/time', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_current_time():
     # Get the current time
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
