@@ -11,6 +11,6 @@ You can run the API using the following command:
 
         python3 main.py
         
-Visit http://localhost:5000/time in your browser or use curl:
+Visit http://localhost:5000 in your browser or use curl:
 
-        curl http://localhost:5000/
+        curl http://localhost:5000
