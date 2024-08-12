@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-api-assignment-service
+  namespace: dev
+spec:
+  selector:
+    app: cloud-api-assi
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer

@@ -44,19 +44,25 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform init
+        run: |
+         cd infrastructure/terraform-manifest/
+         terraform init
 
       - name: Terraform Plan
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform plan -lock=false
+        run: |
+          cd infrastructure/terraform-manifest/
+          terraform plan -lock=false
 
       - name: Terraform Apply
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform apply --auto-approve --lock=false 
+        run: |
+          cd infrastructure/terraform-manifest/
+          terraform apply --auto-approve --lock=false 
 
         
       - name: Set up Python
