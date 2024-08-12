@@ -119,8 +119,9 @@ jobs:
 
       - name: Deploy to EKS
         run: |
-          kubectl apply -f k8s-manifest/deployment.yaml 
-          kubectl apply -f k8s-manifest/service.yaml 
-          kubectl apply -f k8s-manifest/ingress.yaml 
+          cd k8s-manifest
+          kubectl apply -f deployment.yaml 
+          kubectl apply -f service.yaml 
+          kubectl apply -f ingress.yaml 
           kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml   
   
