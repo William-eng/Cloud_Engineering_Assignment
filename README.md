@@ -9,5 +9,13 @@ make sure you have Flask installed. If not, you can install it using pip:
 Run the API:
 You can run the API using the following command:
 
+<<<<<<< HEAD
         python3 time_api.py
 
+=======
+        python3 main.py
+        
+Visit http://localhost:5000 in your browser or use curl:
+
+        curl http://localhost:5000
+>>>>>>> origin/main
