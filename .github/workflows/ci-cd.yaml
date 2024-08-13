@@ -24,7 +24,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -98,31 +98,22 @@ jobs:
           docker push $ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REPOSITORY:latest
 
-      - name: Update kube config
-        run: aws eks update-kubeconfig --region us-east-1 --name cloud-api-ass-eks
-
-      - name: Check for Kubernetes Secret
-        id: check-secret
-        run: |
-          NAMESPACE=default # specify the namespace
-
-          if kubectl get secret $SECRET_NAME --namespace $NAMESPACE; then
-            echo "Secret $SECRET_NAME exists"
-            echo "::set-output name=secret_exists::true"
-          else
-            echo "Secret $SECRET_NAME does not exist"
-            DOCKER_SECRET=$(aws ecr --region=us-east-1 get-authorization-token --output text --query authorizationData[].authorizationToken | base64 -d | cut -d: -f2)
-            echo "Login Result: $DOCKER_SECRET"
-            kubectl create secret docker-registry $SECRET_NAME --docker-server=${{ steps.login-ecr.outputs.registry }} --docker-username=$ECR_USERNAME --docker-password=$DOCKER_SECRET --docker-email=$ECR_EMAIL
-
-          fi
-
-      - name: Deploy to EKS
+      - name: Update Kubernetes deployment
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           cd kube-manifest
-          kubectl apply -f deployment.yaml 
-          kubectl apply -f service.yaml 
-          kubectl apply -f ingress.yaml 
-          kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml   
-  
-      
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl apply -f ingress.yaml
+
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Verify Deployment
+        run: |
+         kubectl rollout status deployment/cloud-api-assignment
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
