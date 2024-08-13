@@ -125,3 +125,10 @@ jobs:
           kubectl apply -f ingress.yaml 
           kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml   
   
+      - name: Terraform Init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+         cd infrastructure/terraform-manifest/
+         terraform destroy --auto-approve
