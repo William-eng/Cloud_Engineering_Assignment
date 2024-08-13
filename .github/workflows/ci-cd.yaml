@@ -55,13 +55,13 @@ jobs:
           cd infrastructure/terraform-manifest/
           terraform plan -lock=false
 
-      # - name: Terraform Apply
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   run: |
-      #     cd infrastructure/terraform-manifest/
-      #     terraform apply --auto-approve --lock=false 
+      - name: Terraform Apply
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd infrastructure/terraform-manifest/
+          terraform destroy --auto-approve --lock=false 
 
       - name: Set up Python
         uses: actions/setup-python@v4
