@@ -12,18 +12,19 @@ on:
       - "!**/README.md"
       - ".github/workflows/ci.yaml"
 
-env:
-  AWS_REGION: us-east-1
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY}}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  SECRET_NAME: 'ecrpullsecret'
-  ECR_USERNAME: 'API-CLOUD'
-  ECR_EMAIL: 'williamtijesuni@gmail.com'
+
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+     AWS_REGION: us-east-1
+     ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY}}
+     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+     SECRET_NAME: 'ecrpullsecret'
+     ECR_USERNAME: 'API-CLOUD'
+     ECR_EMAIL: 'williamtijesuni@gmail.com'
 
     steps:
       - name: Checkout code
