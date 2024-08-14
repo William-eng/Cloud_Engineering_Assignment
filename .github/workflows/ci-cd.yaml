@@ -96,6 +96,9 @@ jobs:
           docker push $ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REPOSITORY:latest
 
+      - name: Update kube config
+        run: aws eks update-kubeconfig --region us-east-1 --name cloud-api-ass-eks    
+
       - name: Update Kubernetes deployment
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
