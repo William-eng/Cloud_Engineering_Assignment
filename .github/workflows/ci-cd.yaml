@@ -10,7 +10,7 @@ on:
     paths:
       - "API/**"
       - "!**/README.md"
-      - ".github/workflows/ci.yaml"
+      - ".github/workflows/ci-cd.yaml"
 
 jobs:
   build-and-deploy:
